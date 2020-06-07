@@ -196,23 +196,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 process = tvInput.getText().toString();
 
-                process = process.replaceAll("×", "*");
-                process = process.replaceAll("%",  "/100");
-                process = process.replaceAll("÷","/");
+                if(process.isEmpty()){
 
-                Context rhino = Context.enter();
-                rhino.setOptimizationLevel(-1);
+                }else {
+                    process = process.replaceAll("×", "*");
+                    process = process.replaceAll("%", "/100");
+                    process = process.replaceAll("÷", "/");
 
-                String finalResult = "";
+                    Context rhino = Context.enter();
+                    rhino.setOptimizationLevel(-1);
 
-                try {
-                    Scriptable scriptable = rhino.initStandardObjects();
-                    finalResult = rhino.evaluateString(scriptable,process,"javascript",1,null).toString();
-                }catch (Exception e){
-                    finalResult="0";
+                    String finalResult = "";
+
+                    try {
+                        Scriptable scriptable = rhino.initStandardObjects();
+                        finalResult = rhino.evaluateString(scriptable, process, "javascript", 1, null).toString();
+                    } catch (Exception e) {
+                        finalResult = "0";
+                    }
+                    tvOutput.setText(finalResult);
                 }
-                tvOutput.setText(finalResult);
-
 
             }
         });
